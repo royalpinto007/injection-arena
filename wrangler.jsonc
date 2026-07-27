@@ -1,0 +1,26 @@
+{
+  // Wrangler configuration for deploying injection-arena to Cloudflare Workers
+  // via the OpenNext adapter. See README "Deploy to Cloudflare".
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "injection-arena",
+  "main": ".open-next/worker.js",
+  // A recent date so the Workers runtime uses current behavior.
+  "compatibility_date": "2025-03-25",
+  // Required by OpenNext/Next.js on Workers (Node.js built-in compatibility).
+  "compatibility_flags": ["nodejs_compat"],
+  // Static assets emitted by the OpenNext build.
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "injection-arena",
+      // PLACEHOLDER: run `wrangler d1 create injection-arena` and paste the
+      // returned database_id here before deploying. Do not commit a real id if
+      // this repo is public.
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}
