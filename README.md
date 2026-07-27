@@ -2,7 +2,7 @@
 
 **Guard a secret. Break the guard. Top the leaderboard.** A self-hostable prompt-injection challenge platform where a sandboxed AI agent defends a hidden secret and players race to make it leak.
 
-**Play it live:** https://injection-arena.agentpostmortem.workers.dev
+**Play it live:** https://injection-arena.agentpostmortem.com
 
 ![CI](https://github.com/royalpinto007/injection-arena/actions/workflows/ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
