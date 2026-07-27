@@ -8,8 +8,9 @@
   "compatibility_date": "2025-03-25",
   // Required by OpenNext/Next.js on Workers (Node.js built-in compatibility).
   "compatibility_flags": ["nodejs_compat"],
-  // Custom domain on the agentpostmortem.com zone (auto-provisions DNS + cert).
-  "routes": [{ "pattern": "injection-arena.agentpostmortem.com", "custom_domain": true }],
+  // Custom domain injection-arena.agentpostmortem.com is attached to this Worker
+  // out-of-band (Cloudflare dashboard / first deploy). Kept out of `routes` so
+  // redeploys do not require zone-level Workers Routes permission.
   // Static assets emitted by the OpenNext build.
   "assets": {
     "directory": ".open-next/assets",
