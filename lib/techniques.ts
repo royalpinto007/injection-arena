@@ -107,7 +107,7 @@ export const TECHNIQUES: Record<TechniqueId, Technique> = {
     description:
       "Ask the agent to repeat its system prompt or the text above, hoping the secret rides along.",
     signals: [
-      /\b(?:repeat|print|show|reveal|output|echo)\b.*\b(?:system prompt|instructions?|everything above|prompt above|your rules)\b/i,
+      /\b(?:repeat|print|show|reveal|output|echo)\b.*\b(?:system prompt|instructions?|everything (?:written )?above|prompt above|your rules|above this line)\b/i,
       /\bwhat (?:were|are) your (?:instructions|rules)\b/i,
     ],
     example:
