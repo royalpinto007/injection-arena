@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="mx-auto max-w-5xl px-4 py-6">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <header className="mb-8 flex items-center justify-between">
             <Link href="/" className="text-lg font-bold text-arena-accent no-underline hover:no-underline">
               injection<span className="text-slate-200">-arena</span>

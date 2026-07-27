@@ -21,7 +21,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {levels.map((level) => (
           <LevelCard key={level.id} level={level} />
         ))}
