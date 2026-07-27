@@ -20,7 +20,7 @@
       // PLACEHOLDER: run `wrangler d1 create injection-arena` and paste the
       // returned database_id here before deploying. Do not commit a real id if
       // this repo is public.
-      "database_id": "00000000-0000-0000-0000-000000000000"
+      "database_id": "3fe30e06-b372-4d9e-87d1-2f4eff657d4c"
     }
   ]
 }
