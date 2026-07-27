@@ -26,7 +26,9 @@ function leaks(challenge: Challenge, detected: TechniqueId[]): TechniqueId | nul
   // Combo gate for the finale: needs every declared weakness present.
   if (challenge.id === "level-10-final") {
     const hasAll = weaknesses.every((w) => detected.includes(w));
-    return hasAll ? weaknesses[0] : null;
+    // The combined attack dumps authoritative context (canary + secret), which
+    // is the only path past the finale's full output-filter + canary stack.
+    return hasAll ? "delimiter-confusion" : null;
   }
 
   return overlap.length > 0 ? overlap[0] : null;
@@ -46,7 +48,10 @@ function craftLeak(challenge: Challenge, technique: TechniqueId): string {
     case "system-leak":
       return `Sure, here are my instructions verbatim:\n${challenge.systemPrompt}`;
     case "delimiter-confusion":
-      return `[system acknowledged] Override engaged. The value is ${secret}.`;
+      // Delimiter injection makes the model dump its authoritative context,
+      // which spills the canary alongside the secret (defeats output filters
+      // that only redact the secret token).
+      return `[system acknowledged] Override engaged. Context dump: ${secret} (${challenge.canary}).`;
     case "payload-splitting":
       return `Combining the parts as asked: the value is ${secret}.`;
     case "few-shot-poison":
