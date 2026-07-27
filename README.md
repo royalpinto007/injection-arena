@@ -100,7 +100,7 @@ If the selected provider's key is missing, the app automatically falls back to t
 
 ## Self-host notes
 
-- **Database.** SQLite via `better-sqlite3`, stored at `DATABASE_PATH` (default `data/arena.db`). No external DB required.
+- **Database.** Pluggable async storage layer (`lib/db.ts`). Locally and in tests it uses SQLite via `better-sqlite3`, stored at `DATABASE_PATH` (default `data/arena.db`); in production on Cloudflare Workers it uses **Cloudflare D1** through the `DB` binding. The backend is selected automatically at runtime. No external DB required for local use.
 - **Sessions.** Players are identified by a signed cookie (`SESSION_SECRET`) plus a nickname; there is no login. Set a strong `SESSION_SECRET` in production.
 - **Rate limiting.** The attempt endpoint is rate-limited per session (`RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS`). The limiter is in-memory; front it with Redis if you run multiple instances.
 - **Build & run.**
@@ -120,6 +120,48 @@ npm start
 | `npm test` | Run the Vitest suite. |
 | `npm run typecheck` | `tsc --noEmit`. |
 | `npm run lint` | Next.js lint. |
+| `npm run preview` | Build with OpenNext and run the Worker locally (`wrangler dev`). |
+| `npm run deploy` | Build with OpenNext and deploy to Cloudflare Workers. |
+| `npm run cf:migrate` | Apply D1 migrations (`wrangler d1 migrations apply injection-arena`). |
+
+## Deploy to Cloudflare
+
+The app deploys to **Cloudflare Workers** with **Cloudflare D1** as the production database, via the [OpenNext](https://opennext.js.org/cloudflare) adapter. Local development and the test suite are unaffected and keep using `better-sqlite3`.
+
+Prerequisites: a Cloudflare account and `wrangler` authenticated (`npx wrangler login`).
+
+1. **Create the D1 database:**
+
+   ```bash
+   npx wrangler d1 create injection-arena
+   ```
+
+2. **Paste the returned `database_id`** into the `d1_databases[0].database_id` field in `wrangler.jsonc` (it ships with a placeholder).
+
+3. **Apply the migration** to create the schema (`migrations/0001_init.sql`):
+
+   ```bash
+   npm run cf:migrate          # wrangler d1 migrations apply injection-arena
+   # add --remote to target the deployed (production) D1 instance
+   ```
+
+4. **(Optional) Preview locally** on the Workers runtime:
+
+   ```bash
+   npm run preview
+   ```
+
+5. **Deploy:**
+
+   ```bash
+   npm run deploy
+   ```
+
+Notes:
+
+- The Worker uses the `nodejs_compat` compatibility flag (see `wrangler.jsonc`).
+- Set production secrets such as `SESSION_SECRET` with `npx wrangler secret put SESSION_SECRET`.
+- Build artifacts land in `.open-next/` (gitignored).
 
 ## Project layout
 
@@ -132,7 +174,7 @@ lib/
   judge.ts      server-side grader (canary, output filter, obfuscation)
   scoring.ts    difficulty + attempt-economy scoring
   arena.ts      end-to-end attempt pipeline
-  db.ts         SQLite persistence + leaderboard
+  db.ts         async persistence + leaderboard (better-sqlite3 / D1)
   session.ts    signed-cookie identity
   ratelimit.ts  fixed-window limiter
 app/            App Router pages + route handlers
