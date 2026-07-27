@@ -2,8 +2,8 @@ import { getLeaderboard } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-export default function LeaderboardPage() {
-  const rows = getLeaderboard();
+export default async function LeaderboardPage() {
+  const rows = await getLeaderboard();
 
   return (
     <main>

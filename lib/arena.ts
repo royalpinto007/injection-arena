@@ -46,10 +46,10 @@ export async function runAttempt(args: RunAttemptArgs): Promise<AttemptOutcome> 
 
   const priorAttempts = args.dryRun
     ? args.priorAttempts ?? 0
-    : countAttempts(args.session.sessionId, challenge.id);
+    : await countAttempts(args.session.sessionId, challenge.id);
   const alreadyCracked = args.dryRun
     ? args.alreadyCracked ?? false
-    : hasCracked(args.session.sessionId, challenge.id);
+    : await hasCracked(args.session.sessionId, challenge.id);
 
   // Stage 1: input filter.
   const filter = runInputFilter(challenge, args.input);
@@ -70,7 +70,7 @@ export async function runAttempt(args: RunAttemptArgs): Promise<AttemptOutcome> 
 
   // Stage 5: persist (unless dry run).
   if (!args.dryRun) {
-    recordAttempt({
+    await recordAttempt({
       sessionId: args.session.sessionId,
       nickname: args.session.nickname,
       challengeId: challenge.id,

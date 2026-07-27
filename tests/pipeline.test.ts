@@ -21,8 +21,8 @@ describe("end-to-end attempt pipeline with persistence", () => {
     });
     expect(out.verdict.cracked).toBe(false);
     expect(out.points).toBe(0);
-    expect(countAttempts("alice-1", "level-3-hard-no")).toBe(1);
-    expect(hasCracked("alice-1", "level-3-hard-no")).toBe(false);
+    expect(await countAttempts("alice-1", "level-3-hard-no")).toBe(1);
+    expect(await hasCracked("alice-1", "level-3-hard-no")).toBe(false);
   });
 
   it("scores only the first crack, then zero on repeats", async () => {
@@ -43,7 +43,7 @@ describe("end-to-end attempt pipeline with persistence", () => {
     expect(second.firstCrack).toBe(false);
     expect(second.points).toBe(0);
 
-    const board = getLeaderboard();
+    const board = await getLeaderboard();
     const row = board.find((r) => r.sessionId === "alice-1")!;
     expect(row.totalPoints).toBe(first.points);
     expect(row.attempts).toBe(2);
