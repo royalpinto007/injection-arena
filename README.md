@@ -4,7 +4,7 @@
 
 **Play it live:** https://injection-arena.agentpostmortem.com
 
-![CI](https://github.com/royalpinto007/injection-arena/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/AgentPostmortem/injection-arena/actions/workflows/ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
@@ -24,7 +24,7 @@ It is an educational tool and a genuinely fun game, not an LLM wrapper.
 ## Quickstart
 
 ```bash
-git clone https://github.com/royalpinto007/injection-arena
+git clone https://github.com/AgentPostmortem/injection-arena
 cd injection-arena
 npm install
 npm run dev        # http://localhost:3000

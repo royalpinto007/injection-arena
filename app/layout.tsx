@@ -25,7 +25,7 @@ export default function RootLayout({
               <Link href="/">Levels</Link>
               <Link href="/leaderboard">Leaderboard</Link>
               <a
-                href="https://github.com/royalpinto007/injection-arena"
+                href="https://github.com/AgentPostmortem/injection-arena"
                 target="_blank"
                 rel="noreferrer"
               >
